@@ -81,7 +81,7 @@ def validate_info():
         pword = ''
    
     if v_pword == '':
-        v_pword_error = 'Please verify your password'
+        v_pword_error = 'Please enter verify your password'
         v_pword = ''
     else:
     	v_pword = v_pword
