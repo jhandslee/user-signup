@@ -17,26 +17,25 @@ signup_form = """
                 font: 16px sans-serif;
                 border-radius: 10px;
             }
-   
     </style>
-        }
 </head>
 <body>
 	<h1>Signup</h1>
 	<form method='POST' action='/validate-input'>
         <!-- Username -->
-		<label for="u-name" style="display:inline;">Username</label>
-		<input id="u-name"  name="uname" type="text" autofocus/>
+		<label for="u-name">Username</label>
+		<input id="u-name"  name="uname" type="text" autofocus />
+        
         <!-- Password -->
-		<label for="p-word" class="inlne">Password</label>
+		<label for="p-word">Password</label>
 		<input id="p-word" name="pword" type="password" />
         
         <!-- Password Verify -->
-		<label for="v-pword" class="inlne">Verify Password</label>
+		<label for="v-pword">Verify Password</label>
 		<input id="v-pword" name="v_pword" type="password" />
         
         <!-- E-mail -->
-		<label for="e-mail" class="inlne">Email (optional)</label>
+		<label for="e-mail">Email (optional)</label>
 		<input id="e-mail" name="email" type="text" />
         
 		<input type="submit" value="Submit" />
@@ -91,18 +90,14 @@ def validate_info():
     	   pword = ''
     	   v_pword = ''
 
-    pattern = re.compile("^[?A-Z0-9._%+-]+@[?A-Z0-9.-]+\.[?A-Z]{3}$")
-    print(pattern)
-    print(email)
-    if pattern.match(email):
+    pattern = re.compile(r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{3}$")
+    if not pattern.match(email):
         email_error = 'Email isn\'t properly formatted (alphanumeric@alpha.abc)'
-
 
     if not uname_error and not pword_error and not v_pword_error and not email_error:
         return render_template('welcome.html', user=uname)
     else:
         return render_template('input_form.html', uname_error = uname_error, pword_error = pword_error, 
             v_pword_error = v_pword_error, email_error = email_error)
-
 
 app.run()
