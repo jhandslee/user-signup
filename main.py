@@ -76,7 +76,8 @@ def validate_info():
             uname_error = 'Username length out of range (3 to 20)'
             uname = ''
    
-    if pword == '':
+    #if pword == '':
+    if len(pword) > 20 or len(pword) < 3:
         pword_error = 'Please enter a password (3 to 20 charcters only)'
         pword = ''
    
@@ -101,6 +102,6 @@ def validate_info():
         return render_template('welcome.html', user=uname)
     else:
         return render_template('input_form.html', uname_error = uname_error, pword_error = pword_error, 
-            v_pword_error = v_pword_error, email_error = email_error)
+            v_pword_error = v_pword_error, email_error = email_error, user=uname, mail=email)
 
 app.run()
