@@ -55,7 +55,6 @@ def display_valid_form():
 @app.route('/validate-input', methods=['POST'])
 def validate_info():
     uname = request.form['uname']
-    print(len(uname))
     pword = request.form['pword']
     v_pword = request.form['v_pword']
     email = request.form['email']
@@ -65,29 +64,23 @@ def validate_info():
     v_pword_error = ''
     email_error = ''
 
-    if uname == '':
-        uname_error = 'Please enter a Username'
-        uname = ''
-    if uname.isalpha() == False:
-        uname_error = 'Username is charcters only'
-        uname = ''
-    else:
-        if len(uname) > 20 or len(uname) < 3:
+    if len(uname) > 20 or len(uname) < 3:
             uname_error = 'Username length out of range (3 to 20)'
-            uname = ''
+
+    if uname.isalnum() == False:
+        uname_error = 'Username uses alphanumeric characters'
    
-    #if pword == '':
     if len(pword) > 20 or len(pword) < 3:
         pword_error = 'Please enter a password (3 to 20 charcters only)'
         pword = ''
    
-    if v_pword == '':
-        v_pword_error = 'Please enter verify your password'
+    if len(v_pword) > 20 or len(v_pword) < 3:
+        v_pword_error = 'Please re-verify your password'
         v_pword = ''
     else:
     	v_pword = v_pword
     	if v_pword != pword:
-    	   v_pword_error = 'Password/Confirmation do not match, re-enter'
+    	   v_pword_error = 'Confirmation does not match, re-enter'
     	   pword = ''
     	   v_pword = ''
 
@@ -96,7 +89,7 @@ def validate_info():
         return render_template('welcome.html', user=uname)
     else:
         if not pattern.match(email):
-            email_error = 'Email isn\'t properly formatted (alphanumeric@alpha.abc)'
+            email_error = 'Email isn\'t properly formatted'
 
     if not uname_error and not pword_error and not v_pword_error and not email_error:
         return render_template('welcome.html', user=uname)
