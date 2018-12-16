@@ -86,13 +86,16 @@ def validate_info():
     else:
     	v_pword = v_pword
     	if v_pword != pword:
-    	   v_pword_error = 'Password does not match, please re-enter both'
+    	   v_pword_error = 'Password/Confirmation do not match, re-enter'
     	   pword = ''
     	   v_pword = ''
 
     pattern = re.compile(r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{3}$")
-    if not pattern.match(email):
-        email_error = 'Email isn\'t properly formatted (alphanumeric@alpha.abc)'
+    if email == "":
+        return render_template('welcome.html', user=uname)
+    else:
+        if not pattern.match(email):
+            email_error = 'Email isn\'t properly formatted (alphanumeric@alpha.abc)'
 
     if not uname_error and not pword_error and not v_pword_error and not email_error:
         return render_template('welcome.html', user=uname)
